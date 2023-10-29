@@ -1,18 +1,35 @@
 @ECHO OFF
+REM This script is to run on a fresh PC to automate some of the setup and testing. Liam Salmon wrote this, that's Liam Salmon, handsome and big brained Liam Salmon.
+slui 3 /q
+Rem replace this with actual path -- start "" "C:\Program Files (x86)\IObit\Driver Booster\DriverBooster.exe"
+diskmgmt.msc
+setlocal enabledelayedexpansion
 
-ECHO If you see this, no, you didn't.
-slui 3
-start "" "C:\Program Files (x86)\IObit\Driver Booster\DriverBooster.exe"
-for /F "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "."') do set GPU_NAME=%%n
+for %%D in (D: E: F:) do (
+    if exist %%D\OCCT.exe (
+        start %%D\OCCT.exe
+        exit
+    ) else (
+        echo OCCT.exe not found on drives D:, E:, or F:.
+    )
+)
 
-echo %GPU_NAME% | find "NVIDIA" >nul && set GPU_NAME=NVIDIA || set GPU_NAME=AMD
+
+
+for /F "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get name ^| findstr "."') do set GPU_NAME=%%n
+
+echo %GPU_NAME%
 
 if "%GPU_NAME%" == "NVIDIA" (
-    echo NVIDIA
+    echo GPU is NVIDIA
     start https://www.nvidia.co.uk/Download/index.aspx?lang=en-uk
-) else (
+) else if "%GPU_NAME%" == "AMD" (
     echo AMD
     start https://www.amd.com/en/support
+) else (
+    echo Error, do it manually
+    goto :eof
 )
+
 
 PAUSE
