@@ -1,6 +1,6 @@
 REM This script is to run on a fresh PC to automate some of the setup and testing. Liam Salmon wrote this, that's Liam Salmon, handsome and big brained Liam Salmon.
 slui 3 /q
-diskmgmt.msc
+diskmgmt.msc /q
 Start ""  "C:\Program Files (x86)\IOBit\Driver Booster\10.5.0\DriverBooster.exe"
 
 setlocal enabledelayedexpansion
