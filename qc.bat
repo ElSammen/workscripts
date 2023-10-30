@@ -1,8 +1,8 @@
-@ECHO OFF
 REM This script is to run on a fresh PC to automate some of the setup and testing. Liam Salmon wrote this, that's Liam Salmon, handsome and big brained Liam Salmon.
 slui 3 /q
-Rem replace this with actual path -- start "" "C:\Program Files (x86)\IObit\Driver Booster\DriverBooster.exe"
 diskmgmt.msc
+Start ""  "C:\Program Files (x86)\IOBit\Driver Booster\10.5.0\DriverBooster.exe"
+
 setlocal enabledelayedexpansion
 
 for %%D in (D: E: F:) do (
@@ -16,7 +16,7 @@ for %%D in (D: E: F:) do (
 
 
 
-for /F "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get name ^| findstr "."') do set GPU_NAME=%%n
+for /F "tokens=*" %%n in ('WMIC path Win32_VideoController get name ^| findstr "."') do set GPU_NAME=%%n
 
 echo %GPU_NAME%
 
