@@ -5,13 +5,28 @@ Start ""  "C:\Program Files (x86)\IOBit\Driver Booster\10.5.0\DriverBooster.exe"
 
 setlocal enabledelayedexpansion
 
-for %%D in (D: E: F:) do (
+setlocal enabledelayedexpansion
+
+for %%D in (D:) do (
     if exist %%D\OCCT.exe (
         start %%D\OCCT.exe
         exit
     ) else (
-        echo OCCT.exe not found on drives D:, E:, or F:.
-    )
+        echo OCCT.exe not found on drive D:
+        for %%D in (E:) do (
+            start %%D\OCCT.exe
+            exit
+        ) else (
+            echo OCCT.exe not found on drive E:
+            for %%D in (F:) do (
+                start %%D\OCCT.exe
+                exit
+            ) else (
+                echo damn bro OCCT.exe not found on drive F either I mean damn what can you do really, guess you could do it manually
+            )
+        ) 
+    ) 
+
 )
 
 
