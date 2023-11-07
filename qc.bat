@@ -31,20 +31,23 @@ for %%D in (D:) do (
 
 
 
-for /F "tokens=*" %%n in ('WMIC path Win32_VideoController get name ^| findstr "."') do set GPU_NAME=%%n
+for /F "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get name ^| findstr "."') do (
+    set "GPU_NAME=%%n"
+    set "GPU_NAME=!GPU_NAME:*NVIDIA*=NVIDIA!"
+    set "GPU_NAME=!GPU_NAME:*AMD*=AMD!"
+)
 
 echo %GPU_NAME%
 
-if "%GPU_NAME%" == "NVIDIA" (
+if "!GPU_NAME!"=="NVIDIA" (
     echo GPU is NVIDIA
     start https://www.nvidia.co.uk/Download/index.aspx?lang=en-uk
-) else if "%GPU_NAME%" == "AMD" (
+) else if "!GPU_NAME!"=="AMD" (
     echo AMD
     start https://www.amd.com/en/support
 ) else (
     echo Error, do it manually
     goto :eof
 )
-
 
 PAUSE
